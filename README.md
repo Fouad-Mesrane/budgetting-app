@@ -43,6 +43,8 @@ Manual simulator checks:
 6. Switch month and edit its limit: prior month's budget remains unchanged.
 7. Verify decimal entry, large text, VoiceOver labels, dark mode, and narrow iPhone layouts.
 
-Implementation was authored on Windows, where Swift/Xcode and an iOS simulator were unavailable. Native compilation, Swift tests, simulator interaction, signing, and device testing have **not** been performed locally. Source/project consistency checks are not a substitute for those checks.
+Implementation was authored on Windows, where Swift/Xcode and an iOS simulator were unavailable. GitHub's macOS runner successfully executed all five budget tests and compiled the iPhone simulator app. The [build history](https://github.com/Fouad-Mesrane/budgetting-app/actions/workflows/ios.yml) records those checks. Local project references, shared-scheme XML, and whitespace checks also passed.
+
+An iOS simulator build is a compilation check, not interactive simulator verification. Launching the app, visual/accessibility review, signing, and physical iPhone testing still need to be completed on a Mac/device before release.
 
 Data is local to the app installation. Deleting the app can delete its records. There is no export/sync flow in this version. Dates use the device's calendar/time zone; changing those settings may affect month grouping.
