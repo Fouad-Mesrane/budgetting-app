@@ -87,8 +87,17 @@ struct DashboardView: View {
                 ToolbarItem(placement: .topBarTrailing) { Button { showEntry = true } label: { Label("Add entry", systemImage: "plus") } }
             }
             .safeAreaInset(edge: .bottom) {
-                Button { showEntry = true } label: { Label("Add expense or income", systemImage: "plus.circle.fill").frame(maxWidth: .infinity).padding(8) }
-                    .buttonStyle(.borderedProminent).tint(.teal).padding().background(.regularMaterial)
+                VStack(spacing: 10) {
+                    HStack {
+                        Text(remaining < 0 ? "Monthly overage" : "Monthly remaining")
+                        Spacer()
+                        Text(Money.display(remaining < 0 ? -remaining : remaining)).bold().monospacedDigit()
+                    }
+                    .font(.subheadline)
+                    .foregroundStyle(remaining < 0 ? Color.red : Color.primary)
+                    Button { showEntry = true } label: { Label("Add expense or income", systemImage: "plus.circle.fill").frame(maxWidth: .infinity).padding(8) }
+                        .buttonStyle(.borderedProminent).tint(.teal)
+                }.padding().background(.regularMaterial)
             }
             .sheet(isPresented: $showEntry) { EntryEditor(month: month) }
             .sheet(isPresented: $showBudget) { BudgetEditor(month: month, initial: budget) }
