@@ -1,0 +1,24 @@
+name: iOS build and budget tests
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['README.md']
+  pull_request:
+    paths-ignore: ['README.md']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Budget calculation tests
+        run: swift test
+      - name: Compile iPhone simulator app
+        run: xcodebuild -project BudgetingApp.xcodeproj -scheme BudgetingApp -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -configuration Debug CODE_SIGNING_ALLOWED=NO build
+
